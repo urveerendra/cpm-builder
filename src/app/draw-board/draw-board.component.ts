@@ -1,0 +1,274 @@
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import Drawflow, {
+  ConnectionEvent,
+  ConnectionStartEvent,
+  DrawFlowEditorMode,
+  DrawflowConnection,
+  DrawflowConnectionDetail,
+  DrawflowNode,
+  MousePositionEvent,
+} from 'drawflow';
+import { NodeElement } from './node.model';
+
+@Component({
+  selector: 'app-draw-board',
+  templateUrl: './draw-board.component.html',
+  styleUrls: ['./draw-board.component.css'],
+})
+export class DrawBoardComponent implements OnInit, AfterViewInit {
+  nodes: NodeElement[] = [];
+  nodesHTML!: NodeListOf<Element>;
+
+  nodesDrawn: any[] = [];
+  selectedItem!: NodeElement;
+  editor!: any;
+
+  locked: boolean = false;
+
+  lastMousePositionEv: any;
+
+  drawFlowHtmlElement!: HTMLElement;
+
+  constructor() {}
+
+  private initializeList(length: number) {
+    let nodesData = [
+    {id: 'waterCooledChiller', name: 'waterCooledChiller',inputs: 0, outputs: 4 },
+    {id:'airCooledChiller',name:'airCooledChiller',inputs:0,outputs:4},
+    {id:'valve1',name:'valve1',inputs:1,outputs:1},
+    {id:'valve2',name:'valve2',inputs:1,outputs:1},
+    {id:'coolingTowerFourFan',name:'coolingTowerFourFan',inputs:4,outputs:0},
+    {id:'coolingTowerTwoFan',name:'coolingTowerTwoFan',inputs:2,outputs:0},
+    {id:'coolingTowerSingleFan',name:'coolingTowerSingleFan',inputs:2,outputs:0},
+    {id:'flowSwitch',name:'flowSwitch',inputs:1,outputs:1},
+    {id:'pump1Vertical',name:'pump1Vertical',inputs:1,outputs:1},
+    {id:'pump1Horizontal',name:'pump1Horizontal',inputs:1,outputs:1},
+    {id:'building2Pipe',name:'building2Pipe',inputs:2,outputs:0},
+    {id:'building4Pipe',name:'building4Pipe',inputs:4,outputs:0}  ]
+
+    for (let i = 0; i<nodesData.length; i++) {
+      this.nodes.push({
+        id: i+1,
+        name: nodesData[i].name + (i+1),
+        class: nodesData[i].name,
+        inputs: nodesData[i].inputs,
+        outputs: nodesData[i].outputs
+      });
+    }
+    console.log(this.nodes);
+  }
+
+  private initDrawFlow(htmlElement: HTMLElement): void {
+    this.editor = new Drawflow(htmlElement);
+    this.editor.reroute = true;
+    this.editor.reroute_fix_curvature = false;
+    this.editor.force_first_input = false;
+    this.editor.createCurvature = function(start_pos_x:any, start_pos_y:any, end_pos_x:any, end_pos_y:any, curvature_value:any, type:any) {
+      var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
+      return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
+    }
+    this.editor.start();
+    const dataToImport = {"drawflow":{"Home":{"data":{"5":{"id":5,"name":"waterCooledChiller1","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments waterCooledChiller'></div><p class='hiddenName'>waterCooledChiller</p>","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"12","output":"input_1"}]},"output_2":{"connections":[{"node":"9","output":"input_1"}]},"output_3":{"connections":[{"node":"8","output":"input_1"}]},"output_4":{"connections":[{"node":"13","output":"input_1"}]}},"pos_x":-273.6666666666667,"pos_y":-75},"6":{"id":6,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_2"}]}},"pos_x":577,"pos_y":42.333333333333336},"7":{"id":7,"name":"coolingTowerSingleFan7","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments coolingTowerSingleFan'></div><p class='hiddenName'>coolingTowerSingleFan</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"12","input":"output_1"}]},"input_2":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{},"pos_x":957.6666666666666,"pos_y":-147},"8":{"id":8,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_3"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_1"}]}},"pos_x":518,"pos_y":253},"9":{"id":9,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_2"}]}},"outputs":{"output_1":{"connections":[{"node":"6","output":"input_1"}]}},"pos_x":348,"pos_y":-50.333333333333336},"10":{"id":10,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"11","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_2"}]}},"pos_x":529,"pos_y":468.3333333333333},"11":{"id":11,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"13","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":233,"pos_y":472},"12":{"id":12,"name":"flowSwitch8","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments flowSwitch'></div><p class='hiddenName'>flowSwitch</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_1"}]}},"pos_x":558.6666666666666,"pos_y":-168},"13":{"id":13,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_4"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":17.666666666666668,"pos_y":313},"14":{"id":14,"name":"building2Pipe11","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments building2Pipe'></div><p class='hiddenName'>building2Pipe</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]},"input_2":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{},"pos_x":963.3333333333334,"pos_y":404}}}}};
+    this.editor.import(dataToImport);
+  }
+
+  ngAfterViewInit(): void {
+    this.drawFlowHtmlElement = <HTMLElement>document.getElementById('drawflow');
+    this.initDrawFlow(this.drawFlowHtmlElement);
+
+    // Events!
+    this.editor.on('nodeCreated', (id: any) => {
+      console.log(
+        'Editor Event :>> Node created ' + id,
+        this.editor.getNodeFromId(id)
+      );
+    });
+
+    this.editor.on('nodeRemoved', (id: any) => {
+      console.log('Editor Event :>> Node removed ' + id);
+    });
+
+    this.editor.on('nodeSelected', (id: any) => {
+      console.log(
+        'Editor Event :>> Node selected ' + id,
+        this.editor.getNodeFromId(id)
+      );
+    });
+
+    this.editor.on('moduleCreated', (name: any) => {
+      console.log('Editor Event :>> Module Created ' + name);
+    });
+
+    this.editor.on('moduleChanged', (name: any) => {
+      console.log('Editor Event :>> Module Changed ' + name);
+    });
+
+    this.editor.on('connectionCreated', (connection: any) => {
+      console.log('Editor Event :>> Connection created ', connection);
+    });
+
+    this.editor.on('connectionRemoved', (connection: any) => {
+      console.log('Editor Event :>> Connection removed ', connection);
+    });
+
+    // this.editor.on('mouseMove', (position: any) => {
+    //   console.log('Editor Event :>> Position mouse x:' + position.x + ' y:' + position.y);
+    // });
+
+    this.editor.on('nodeMoved', (id: any) => {
+      console.log('Editor Event :>> Node moved ' + id);
+    });
+
+    this.editor.on('zoom', (zoom: any) => {
+      console.log('Editor Event :>> Zoom level ' + zoom);
+    });
+
+    // this.editor.on('translate', (position: any) => {
+    //   console.log(
+    //     'Editor Event :>> Translate x:' + position.x + ' y:' + position.y
+    //   );
+    // });
+
+    this.editor.on('addReroute', (id: any) => {
+      console.log('Editor Event :>> Reroute added ' + id);
+    });
+
+    this.editor.on('removeReroute', (id: any) => {
+      console.log('Editor Event :>> Reroute removed ' + id);
+    });
+  }
+
+  ngOnInit(): void {
+    this.initializeList(5);
+  }
+
+  // Drag Events
+  onDragStart(e: any) {
+    if (e.type === 'dragstart') {
+      console.log('onDragStart :>> e :>> ', e);
+      this.selectedItem = <NodeElement>(
+        this.nodes.find((node: NodeElement) => node.name === e.target.children[0].innerHTML)
+        // this.nodes.find((node: NodeElement) => node.name === e.target.outerText)0
+      );
+      console.log(this.selectedItem);
+    }
+  }
+
+  onDragEnter(e: any) {
+    console.log('onDragEnter :>> e :>> ', e);
+  }
+
+  onDragLeave(e: any) {
+    console.log('onDragLeave :>> e :>> ', e);
+  }
+
+  onDragOver(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.lastMousePositionEv = e;
+    // console.log('onDragOver :>> e :>> ', e);
+  }
+
+  onDragEnd(e: any) {
+    console.log('onDragend :>> e :>> ', e);
+  }
+
+  onDrop(e: any) {
+    // After dropping the element, create a node
+    if (e.type === 'drop') {
+      console.log('onDrop :>> e :>> ', e);
+      e.preventDefault();
+      this.addNodeToDrawBoard(e.clientX, e.clientY);
+      // this.resetAllInputsOutputs();
+    }
+  }
+
+  resetAllInputsOutputs() {
+    this.nodes.forEach((node) => {
+      node.inputs = 0;
+      node.outputs = 0;
+    });
+  }
+
+  // Drawflow Editor Operations
+  addNodeToDrawBoard(pos_x: number, pos_y: number) {
+    if (this.editor.editor_mode === 'edit') {
+      pos_x =
+        pos_x *
+          (this.editor.precanvas.clientWidth /
+            (this.editor.precanvas.clientWidth * this.editor.zoom)) -
+        this.editor.precanvas.getBoundingClientRect().x *
+          (this.editor.precanvas.clientWidth /
+            (this.editor.precanvas.clientWidth * this.editor.zoom));
+
+      pos_y =
+        pos_y *
+          (this.editor.precanvas.clientHeight /
+            (this.editor.precanvas.clientHeight * this.editor.zoom)) -
+        this.editor.precanvas.getBoundingClientRect().y *
+          (this.editor.precanvas.clientHeight /
+            (this.editor.precanvas.clientHeight * this.editor.zoom));
+
+      const htmlTemplate = `
+          <div
+          class="drag-drawflow buildEquipments ${this.selectedItem.class}">
+         </div>
+          <p class="hiddenName">${this.selectedItem.class}</p>
+          `;
+
+      const nodeName = this.selectedItem.name;
+      const nodeId = this.editor.addNode(
+        this.selectedItem.name,
+        this.selectedItem.inputs,
+        this.selectedItem.outputs,
+        pos_x,
+        pos_y,
+        '',
+        {},
+        htmlTemplate,
+        false
+      );
+
+      this.nodesDrawn.push({
+        nodeId,
+        nodeName,
+      });
+      // const newNode = <DrawflowNode>this.editor.getNodeFromId(nodeId);
+    }
+  }
+
+  onClear() {
+    this.editor.clear();
+  }
+
+  changeMode() {
+    this.locked = !this.locked;
+    this.editor.editor_mode = this.locked ? 'fixed' : 'edit';
+  }
+
+  onZoomOut() {
+    this.editor.zoom_out();
+  }
+
+  onZoomIn() {
+    this.editor.zoom_in();
+  }
+
+  onZoomReset() {
+    this.editor.zoom_reset();
+  }
+
+  onSubmit() {
+    const dataExport = this.editor.export();
+    // JSON.stringify(dataExport).replaceAll('\\"',"'").replaceAll('\\n',"").replaceAll(' ',"");
+    // JSON.stringify(dataExport).replaceAll('\\n',"");
+    // JSON.stringify(dataExport).replaceAll(' ',"")
+    console.log('dataExport :>> ', dataExport);
+  }
+}

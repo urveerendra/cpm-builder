@@ -1,0 +1,58 @@
+<div class="draw-flow-poc">
+  <header>
+    <h2>CPM Builder</h2>
+  </header>
+  <div class="wrapper">
+    <div class="col" style="text-align: left">
+      <ng-container *ngFor="let node of nodes">
+        <div
+          class="drag-drawflow buildEquipments {{ node.class }}"
+          draggable="true"
+          (dragstart)="onDragStart($event)"
+        >
+          <p class="hiddenName">{{node.name}}</p>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-right">
+      <!-- <div
+        class="btn-export"
+        onclick="Swal.fire({ title: 'Export',
+        html: '<pre><code>'+JSON.stringify(editor.export(), null,4)+'</code></pre>'
+        })"
+      >
+        Export
+      </div> -->
+      <div
+        id="drawflow"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (dragover)="onDragOver($event)"
+        (dragend)="onDragEnd($event)"
+        (drop)="onDrop($event)"
+      >
+        <div class="btn-submit" (click)="onSubmit()">Submit</div>
+        <div class="btn-clear" (click)="onClear()">Clear</div>
+        <div class="btn-lock">
+          <button
+            (click)="changeMode()"
+            [ngStyle]="{ display: locked ? 'none' : 'block' }"
+          >
+            Lock
+          </button>
+          <button
+            (click)="changeMode()"
+            [ngStyle]="{ display: locked ? 'block' : 'none' }"
+          >
+            Unlock
+          </button>
+        </div>
+        <div class="bar-zoom">
+          <button (click)="onZoomOut()">Out</button>
+          <button (click)="onZoomReset()">Reset</button>
+          <button (click)="onZoomIn()">In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

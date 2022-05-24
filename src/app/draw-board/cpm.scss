@@ -1,0 +1,78 @@
+.buildEquipments{
+  width: 170px;
+  height: 170px;
+  margin: 0 auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.hiddenName{
+  display: none;
+}
+.waterCooledChiller{
+    background-image: url("src/assets/images/cpmEquips/01_Water_Cooled_Chiller.png");
+  }
+  .waterCooledChillerCutaway{
+    background-image: url("src/assets/images/cpmEquips/01_Water_Cooled_Chiller_Cutaway.png");
+  }
+  .airCooledChiller{
+    background-image: url("src/assets/images/cpmEquips/02_Air_Cooled_Chiller.png");
+  }
+  .airCooledChillerCutaway{
+    background-image: url("src/assets/images/cpmEquips/02_Air_Cooled_Chiller_Cutaway.png");
+  }
+  .valve1{
+    background-image: url("src/assets/images/cpmEquips/03_Valve_1.png");
+    width:70px !important;
+    height:70px;
+  }
+  .valve2{
+    background-image: url("src/assets/images/cpmEquips/03_Valve_2.png");
+    width:70px !important;
+    height:70px;
+  }
+  .coolingTowerFourFan{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Four_Fan.png");
+  }
+  .coolingTowerFourFanCutaway{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Four_Fan_Cutaway.png");
+  }
+  .coolingTowerSingleFan{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Single_Fan.png");
+    width:260px !important;
+    height:250px;
+  }
+  .coolingTowerSingleFanCutaway{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Single_Fan_Cutaway.png");
+    width:260px !important;
+    height:250px;
+  }
+  .coolingTowerTwoFan{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Two_Fan.png");
+    width:260px !important;
+    height:250px;
+  }
+  .flowSwitch{
+    background-image: url("src/assets/images/cpmEquips/05_Flow_Switch.png");
+    width:90px !important;
+    height:100px;
+  }
+  .pump1Vertical{
+    background-image: url("src/assets/images/cpmEquips/06_Pump1.png");
+    width:90px !important;
+    height:100px;
+  }
+  .pump1Horizontal{
+    background-image: url("src/assets/images/cpmEquips/06_Pump2.png");
+    width:90px !important;
+    height:100px;
+  }
+  .building2Pipe{
+    background-image: url("src/assets/images/cpmEquips/15_Building_2_Pipe.png");
+    width:230px !important;
+    height:200px;
+  }
+  .building4Pipe{
+    background-image: url("src/assets/images/cpmEquips/15_Building_2_Pipe-1.png");
+    width:230px !important;
+    height:200px; 
+  } 
