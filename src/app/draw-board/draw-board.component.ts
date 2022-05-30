@@ -1,3 +1,4 @@
+import { IfStmt } from '@angular/compiler';
 import {
   AfterViewInit,
   Component,
@@ -34,6 +35,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
   lastMousePositionEv: any;
 
   drawFlowHtmlElement!: HTMLElement;
+  selectedItemInChart: any;
 
   constructor() {}
 
@@ -61,7 +63,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
         outputs: nodesData[i].outputs
       });
     }
-    console.log(this.nodes);
+    // console.log(this.nodes);
   }
 
   private initDrawFlow(htmlElement: HTMLElement): void {
@@ -74,10 +76,361 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
       return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
     }
     this.editor.start();
-    const dataToImport = {"drawflow":{"Home":{"data":{"5":{"id":5,"name":"waterCooledChiller1","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments waterCooledChiller'></div><p class='hiddenName'>waterCooledChiller</p>","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"12","output":"input_1"}]},"output_2":{"connections":[{"node":"9","output":"input_1"}]},"output_3":{"connections":[{"node":"8","output":"input_1"}]},"output_4":{"connections":[{"node":"13","output":"input_1"}]}},"pos_x":-273.6666666666667,"pos_y":-75},"6":{"id":6,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_2"}]}},"pos_x":577,"pos_y":42.333333333333336},"7":{"id":7,"name":"coolingTowerSingleFan7","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments coolingTowerSingleFan'></div><p class='hiddenName'>coolingTowerSingleFan</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"12","input":"output_1"}]},"input_2":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{},"pos_x":957.6666666666666,"pos_y":-147},"8":{"id":8,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_3"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_1"}]}},"pos_x":518,"pos_y":253},"9":{"id":9,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_2"}]}},"outputs":{"output_1":{"connections":[{"node":"6","output":"input_1"}]}},"pos_x":348,"pos_y":-50.333333333333336},"10":{"id":10,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"11","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_2"}]}},"pos_x":529,"pos_y":468.3333333333333},"11":{"id":11,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"13","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":233,"pos_y":472},"12":{"id":12,"name":"flowSwitch8","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments flowSwitch'></div><p class='hiddenName'>flowSwitch</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_1"}]}},"pos_x":558.6666666666666,"pos_y":-168},"13":{"id":13,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_4"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":17.666666666666668,"pos_y":313},"14":{"id":14,"name":"building2Pipe11","data":{},"class":"","html":"<div class='drag-drawflow buildEquipments building2Pipe'></div><p class='hiddenName'>building2Pipe</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]},"input_2":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{},"pos_x":963.3333333333334,"pos_y":404}}}}};
+    //const dataToImport = {"drawflow":{"Home":{"data":{"5":{"id":5,"name":"waterCooledChiller1","data":{},"class":"","html":"<div class='drag-drawflow  waterCooledChiller'></div><p class='hiddenName'>waterCooledChiller</p>","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"12","output":"input_1"}]},"output_2":{"connections":[{"node":"9","output":"input_1"}]},"output_3":{"connections":[{"node":"8","output":"input_1"}]},"output_4":{"connections":[{"node":"13","output":"input_1"}]}},"pos_x":-273.6666666666667,"pos_y":-75},"6":{"id":6,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow  valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_2"}]}},"pos_x":577,"pos_y":42.333333333333336},"7":{"id":7,"name":"coolingTowerSingleFan7","data":{},"class":"","html":"<div class='drag-drawflow  coolingTowerSingleFan'></div><p class='hiddenName'>coolingTowerSingleFan</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"12","input":"output_1"}]},"input_2":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{},"pos_x":957.6666666666666,"pos_y":-147},"8":{"id":8,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow  pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_3"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_1"}]}},"pos_x":518,"pos_y":253},"9":{"id":9,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow  pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_2"}]}},"outputs":{"output_1":{"connections":[{"node":"6","output":"input_1"}]}},"pos_x":348,"pos_y":-50.333333333333336},"10":{"id":10,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow  pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"11","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_2"}]}},"pos_x":529,"pos_y":468.3333333333333},"11":{"id":11,"name":"pump1Vertical9","data":{},"class":"","html":"<div class='drag-drawflow  pump1Vertical'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"13","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":233,"pos_y":472},"12":{"id":12,"name":"flowSwitch8","data":{},"class":"","html":"<div class='drag-drawflow  flowSwitch'></div><p class='hiddenName'>flowSwitch</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_1"}]}},"pos_x":558.6666666666666,"pos_y":-168},"13":{"id":13,"name":"valve24","data":{},"class":"","html":"<div class='drag-drawflow  valve2'></div><p class='hiddenName'>valve2</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_4"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":17.666666666666668,"pos_y":313},"14":{"id":14,"name":"building2Pipe11","data":{},"class":"","html":"<div class='drag-drawflow  building2Pipe'></div><p class='hiddenName'>building2Pipe</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]},"input_2":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{},"pos_x":963.3333333333334,"pos_y":404}}}}};
+    // const dataToImport:any = {
+    //   "drawflow": {
+    //     "Home": {
+    //       "data": {
+    //         "5": {
+    //           "id": 5,
+    //           "name": "waterCooledChiller1",
+    //           "data": {},
+    //           "class": "waterCooledChiller",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>waterCooledChiller</p>",
+    //           "typenode": false,
+    //           "inputs": {},
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "12",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             },
+    //             "output_2": {
+    //               "connections": [
+    //                 {
+    //                   "node": "9",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             },
+    //             "output_3": {
+    //               "connections": [
+    //                 {
+    //                   "node": "8",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             },
+    //             "output_4": {
+    //               "connections": [
+    //                 {
+    //                   "node": "13",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": -590,
+    //           "pos_y": -141.5
+    //         },
+    //         "6": {
+    //           "id": 6,
+    //           "name": "valve14",
+    //           "data": {},
+    //           "class": "valve1",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>valve1</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "9",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "7",
+    //                   "output": "input_2"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 577,
+    //           "pos_y": 42.333333333333339
+    //         },
+    //         "7": {
+    //           "id": 7,
+    //           "name": "coolingTowerSingleFan7",
+    //           "data": {},
+    //           "class": "coolingTowerSingleFan",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>coolingTowerSingleFan</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "12",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             },
+    //             "input_2": {
+    //               "connections": [
+    //                 {
+    //                   "node": "6",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {},
+    //           "pos_x": 957.6666666666666,
+    //           "pos_y": -147
+    //         },
+    //         "8": {
+    //           "id": 8,
+    //           "name": "pump1Vertical9",
+    //           "data": {},
+    //           "class": "pump1Vertical",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "5",
+    //                   "input": "output_3"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "14",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 518,
+    //           "pos_y": 253
+    //         },
+    //         "9": {
+    //           "id": 9,
+    //           "name": "pump1Vertical9",
+    //           "data": {},
+    //           "class": "pump1Vertical",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "5",
+    //                   "input": "output_2"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "6",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 348,
+    //           "pos_y": -50.333333333333339
+    //         },
+    //         "10": {
+    //           "id": 10,
+    //           "name": "pump1Vertical9",
+    //           "data": {},
+    //           "class": "pump1Vertical",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "11",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "14",
+    //                   "output": "input_2"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 530,
+    //           "pos_y": 469.5
+    //         },
+    //         "11": {
+    //           "id": 11,
+    //           "name": "pump1Vertical9",
+    //           "data": {},
+    //           "class": "pump1Vertical",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "13",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "10",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 233,
+    //           "pos_y": 472
+    //         },
+    //         "12": {
+    //           "id": 12,
+    //           "name": "flowSwitch8",
+    //           "data": {},
+    //           "class": "flowSwitch",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>flowSwitch</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "5",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "7",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 531.5,
+    //           "pos_y": -251
+    //         },
+    //         "13": {
+    //           "id": 13,
+    //           "name": "valve14",
+    //           "data": {},
+    //           "class": "valve1",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>valve1</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "5",
+    //                   "input": "output_4"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {
+    //             "output_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "11",
+    //                   "output": "input_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "pos_x": 17.666666666666669,
+    //           "pos_y": 313
+    //         },
+    //         "14": {
+    //           "id": 14,
+    //           "name": "building2Pipe11",
+    //           "data": {},
+    //           "class": "building2Pipe",
+    //           "html": "<div class='drag-drawflow'></div><p class='hiddenName'>building2Pipe</p>",
+    //           "typenode": false,
+    //           "inputs": {
+    //             "input_1": {
+    //               "connections": [
+    //                 {
+    //                   "node": "8",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             },
+    //             "input_2": {
+    //               "connections": [
+    //                 {
+    //                   "node": "10",
+    //                   "input": "output_1"
+    //                 }
+    //               ]
+    //             }
+    //           },
+    //           "outputs": {},
+    //           "pos_x": 963.3333333333334,
+    //           "pos_y": 404
+    //         }
+    //       }
+    //     }
+    //   }
+    // };
+    const dataToImport = {"drawflow":{"Home":{"data":{"5":{"id":5,"name":"waterCooledChiller1","data":{},"class":"waterCooledChiller","html":"<div class='drag-drawflow'></div><p class='hiddenName'>waterCooledChiller</p>","typenode":false,"inputs":{},"outputs":{"output_1":{"connections":[{"node":"12","output":"input_1"}]},"output_2":{"connections":[{"node":"9","output":"input_1"}]},"output_3":{"connections":[{"node":"8","output":"input_1"}]},"output_4":{"connections":[{"node":"13","output":"input_1"}]}},"pos_x":-590,"pos_y":-141.5},"6":{"id":6,"name":"valve14","data":{},"class":"valve1","html":"<div class='drag-drawflow'></div><p class='hiddenName'>valve1</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_2"}]}},"pos_x":983,"pos_y":120},"7":{"id":7,"name":"coolingTowerSingleFan7","data":{},"class":"coolingTowerSingleFan","html":"<div class='drag-drawflow'></div><p class='hiddenName'>coolingTowerSingleFan</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"12","input":"output_1"}]},"input_2":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{},"pos_x":960,"pos_y":-345},"8":{"id":8,"name":"pump1Vertical9","data":{},"class":"pump1Vertical","html":"<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_3"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_1"}]}},"pos_x":590,"pos_y":261},"9":{"id":9,"name":"pump1Vertical9","data":{},"class":"pump1Vertical","html":"<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_2"}]}},"outputs":{"output_1":{"connections":[{"node":"6","output":"input_1"}]}},"pos_x":592,"pos_y":78},"10":{"id":10,"name":"pump1Vertical9","data":{},"class":"pump1Vertical","html":"<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"11","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"14","output":"input_2"}]}},"pos_x":544,"pos_y":502},"11":{"id":11,"name":"pump1Vertical9","data":{},"class":"pump1Vertical","html":"<div class='drag-drawflow'></div><p class='hiddenName'>pump1Vertical</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"13","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":355,"pos_y":472},"12":{"id":12,"name":"flowSwitch8","data":{},"class":"flowSwitch","html":"<div class='drag-drawflow'></div><p class='hiddenName'>flowSwitch</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"7","output":"input_1"}]}},"pos_x":566,"pos_y":-249},"13":{"id":13,"name":"valve14","data":{},"class":"valve1","html":"<div class='drag-drawflow'></div><p class='hiddenName'>valve1</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"5","input":"output_4"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":160,"pos_y":465},"14":{"id":14,"name":"building2Pipe11","data":{},"class":"building2Pipe","html":"<div class='drag-drawflow'></div><p class='hiddenName'>building2Pipe</p>","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]},"input_2":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{},"pos_x":1033,"pos_y":172}}}}};
     this.editor.import(dataToImport);
+    console.log(this.editor);
+    this.drawGreenCustomPaths();
   }
-
+  drawGreenCustomPaths(){
+    let allSVGConnections = document.getElementsByClassName("connection");
+    for(let i=0 ; i < allSVGConnections.length ; i++ ){
+      if(this.findSVGNode(allSVGConnections[i].classList)){
+        allSVGConnections[i].classList.add("greenClass");
+      }
+    }
+  }
+  findSVGNode(listOfClasses:any){
+    let colorGreen = false;
+    let nodeOutClass = "";
+    let nodeInClass = "";
+    listOfClasses.forEach( (element:any) => {
+      if(element.indexOf("node_out") > -1){
+        nodeOutClass = element;
+      }
+      if(element.indexOf("node_in") > -1){
+        nodeInClass = element;
+      }
+    });
+    nodeOutClass = nodeOutClass.split("node_out_")[1];
+    nodeInClass = nodeInClass.split("node_in_")[1];
+    let findNodeClass:any = document.getElementById(nodeOutClass)?.classList;
+    if(findNodeClass.contains("waterCooledChiller") && (listOfClasses.contains("output_1") || listOfClasses.contains("output_2")) ){
+      colorGreen = true;
+    }
+    return colorGreen
+  }
   ngAfterViewInit(): void {
     this.drawFlowHtmlElement = <HTMLElement>document.getElementById('drawflow');
     this.initDrawFlow(this.drawFlowHtmlElement);
@@ -99,6 +452,13 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
         'Editor Event :>> Node selected ' + id,
         this.editor.getNodeFromId(id)
       );
+      // this.selectedItemInChart = this.editor.getNodeFromId(id);
+      // var selectedItem;
+      // if(this.selectedItemInChart.name.indexOf("waterCooledChiller") > -1){
+      //   // this.selectedItemInChart.innerHTML = "<div class='drag-drawflow  waterCooledChiller selected'></div><p class='hiddenName'>waterCooledChiller</p>"
+      //   selectedItem = document.getElementById("node-"+this.selectedItemInChart.id);
+      //   console.log(selectedItem);
+      // }
     });
 
     this.editor.on('moduleCreated', (name: any) => {
@@ -111,6 +471,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
 
     this.editor.on('connectionCreated', (connection: any) => {
       console.log('Editor Event :>> Connection created ', connection);
+      this.getConnectionCustomization(connection);
     });
 
     this.editor.on('connectionRemoved', (connection: any) => {
@@ -147,7 +508,13 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initializeList(5);
   }
-
+  getConnectionCustomization(connection:any){
+    let outputConnected = this.editor.getNodeFromId(connection.output_id);
+    let inputConnected = this.editor.getNodeFromId(connection.input_id);
+    if(outputConnected.class =="waterCooledChiller" && (connection.output_class =="output_1" || connection.output_class =="output_2" || connection.output_class =="output_3" )){
+      document.getElementsByClassName("node_out_node-"+ connection.output_id +" "+ "node_in_node-"+ connection.input_id)[0].classList.add("greenClass");
+    }
+  }
   // Drag Events
   onDragStart(e: any) {
     if (e.type === 'dragstart') {
@@ -156,7 +523,6 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
         this.nodes.find((node: NodeElement) => node.name === e.target.children[0].innerHTML)
         // this.nodes.find((node: NodeElement) => node.name === e.target.outerText)0
       );
-      console.log(this.selectedItem);
     }
   }
 
@@ -217,7 +583,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
 
       const htmlTemplate = `
           <div
-          class="drag-drawflow buildEquipments ${this.selectedItem.class}">
+          class="drag-drawflow">
          </div>
           <p class="hiddenName">${this.selectedItem.class}</p>
           `;
@@ -229,7 +595,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
         this.selectedItem.outputs,
         pos_x,
         pos_y,
-        '',
+        this.selectedItem.class,
         {},
         htmlTemplate,
         false
@@ -239,6 +605,7 @@ export class DrawBoardComponent implements OnInit, AfterViewInit {
         nodeId,
         nodeName,
       });
+      console.log(this.nodesDrawn);
       // const newNode = <DrawflowNode>this.editor.getNodeFromId(nodeId);
     }
   }

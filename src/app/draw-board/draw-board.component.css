@@ -61,7 +61,6 @@ header a {
 
 .drag-drawflow {
   line-height: 50px;
-  /* border-bottom: 1px solid var(--border-color); */
   padding-left: 20px;
   cursor: move;
   user-select: none;
@@ -196,14 +195,13 @@ header a {
   padding: 0px;
   width: inherit;
   border-radius: 20px;
-  box-shadow: 0 2px 20px 2px #4ea9ff;
 }
 
 .drawflow .drawflow-node.selected {
-  background: white;
+  /* background: white;
   border: 1px solid #4ea9ff;
   -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
-  box-shadow: 0 2px 20px 2px #4ea9ff;
+  box-shadow: 0 2px 20px 2px #4ea9ff; */
 }
 
 .drawflow .drawflow-node.selected .title-box {
@@ -220,7 +218,7 @@ header a {
 .drawflow .drawflow-node .output {
   height: 15px;
   width: 15px;
-  border: 2px solid var(--border-color);
+  /* border: 2px solid var(--border-color); */
 }
 
 .drawflow .drawflow-node .input:hover,
@@ -405,6 +403,9 @@ header a {
   color: black;
   z-index: 2;
   padding: 15px;
+  width:100%;
+  background-size:100%;
+  background-repeat: no-repeat;
 }
 
 .drawflow .drawflow-node.selected {
@@ -422,7 +423,7 @@ header a {
 }
 
 .drawflow .drawflow-node .drawflow_content_node {
-  /* width: 100%; */
+  width: 100%;
   display: block;
 }
 
@@ -432,9 +433,10 @@ header a {
   position: relative;
   width: 20px;
   height: 20px;
-  background: white;
+  /* background: white; */
+  background: transparent;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 2px solid transparent;
   cursor: crosshair;
   z-index: 1;
   margin-bottom: 5px;
@@ -443,7 +445,7 @@ header a {
 .drawflow .drawflow-node .input {
   left: -27px;
   top: 2px;
-  background: yellow;
+  /* background: yellow; */
 }
 
 .drawflow .drawflow-node .output {
@@ -452,7 +454,7 @@ header a {
 }
 
 .drawflow svg {
-  z-index: 0;
+  z-index: 10;
   position: absolute;
   overflow: visible !important;
 }
@@ -464,11 +466,11 @@ header a {
 
 .drawflow .connection .main-path {
   fill: none;
-  stroke-width: 22px;
+  stroke-width: 18px;
   stroke: steelblue;
   opacity: 0.5;
   pointer-events: all;
-  stroke-dasharray: 1000;
+  stroke-dasharray: 100000;
   stroke-dashoffset: 1000;
   stroke-linejoin: round;
   animation: dash 5s linear forwards;

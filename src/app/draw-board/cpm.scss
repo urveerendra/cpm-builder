@@ -8,13 +8,16 @@
 .hiddenName{
   display: none;
 }
+.greenClass path{
+  stroke: green !important;
+}
 .waterCooledChiller{
     background-image: url("src/assets/images/cpmEquips/01_Water_Cooled_Chiller.png");
   }
-  .waterCooledChillerCutaway{
+.waterCooledChillerCutaway{
     background-image: url("src/assets/images/cpmEquips/01_Water_Cooled_Chiller_Cutaway.png");
   }
-  .airCooledChiller{
+   .airCooledChiller{
     background-image: url("src/assets/images/cpmEquips/02_Air_Cooled_Chiller.png");
   }
   .airCooledChillerCutaway{
@@ -22,12 +25,12 @@
   }
   .valve1{
     background-image: url("src/assets/images/cpmEquips/03_Valve_1.png");
-    width:70px !important;
+    width:90px !important;
     height:70px;
   }
   .valve2{
     background-image: url("src/assets/images/cpmEquips/03_Valve_2.png");
-    width:70px !important;
+    width:90px !important;
     height:70px;
   }
   .coolingTowerFourFan{
@@ -38,8 +41,8 @@
   }
   .coolingTowerSingleFan{
     background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Single_Fan.png");
-    width:260px !important;
-    height:250px;
+    width: 430px !important;
+    height: 415px;
   }
   .coolingTowerSingleFanCutaway{
     background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Single_Fan_Cutaway.png");
@@ -68,11 +71,169 @@
   }
   .building2Pipe{
     background-image: url("src/assets/images/cpmEquips/15_Building_2_Pipe.png");
-    width:230px !important;
-    height:200px;
+    width: 535px !important;
+    height: 440px;
   }
   .building4Pipe{
     background-image: url("src/assets/images/cpmEquips/15_Building_2_Pipe-1.png");
     width:230px !important;
+    height:200px;
+  }
+  #drawflow .waterCooledChiller{
+    width: 470px;
+    height: 415px;
+    background-size: 513px 457px;
+  }
+  .waterCooledChiller .output.output_1{  
+    top: 90px !important;
+    right: 34px !important;
+  }
+  .waterCooledChiller .output.output_2{  
+    top: 89px !important;
+    right: 62px !important;
+  }
+  .waterCooledChiller .output.output_3{  
+    top: 86px !important;
+    right: 108px !important;
+  }
+  .waterCooledChiller .output.output_4{  
+    top: 87px !important;
+    right: 137px !important;
+  }
+  .coolingTowerSingleFan .input.input_1 {
+    top: 148px !important;
+    left: 32px !important;
+  }
+  .coolingTowerSingleFan .input.input_2 {
+    top: 140px !important;
+    left: 77px !important;
+  }
+  .building2Pipe .input.input_1 {
+    top: 188px !important;
+    left: 68px !important;
+  }
+  .building2Pipe .input.input_2 {
+    top: 186px !important;
+    left: 120px !important;
+  }
+  .pump1Vertical .input.input_1{
+    top: 10px !important;
+    left: 2px !important;
+  }
+  .pump1Vertical .output.output_1{
+    top: 40px !important;
+    right: 35px !important;
+  }
+  .valve1 .input.input_1{
+    top: 14px !important;
+    left: 14px !important;
+  }
+  .valve1 .output.output_1{
+    top: 28px !important;
+    right: 44px !important;
+  }
+  /*
+  #drawflow .waterCooledChiller{
+    width: 470px;
+    height: 415px;
+    background-size: 513px 457px;
+    .outputs{
+      .output.output_1{  
+        top: 110px !important;
+        right: 36px !important;
+      }
+      .output.output_2{  
+        right: 62px !important;
+        top: 110px !important;
+      }
+      .output.output_3{  
+        top: 104px !important;
+        right: 108px !important;
+      }
+      .output.output_4{  
+        top: 103px !important;
+        right: 136px !important;
+      }
+    }
+  }
+  #drawflow .waterCooledChiller{
+    background-image: url("src/assets/images/cpmEquips/2dImages/01_CPM_Water_Cooled_Chiller.png");
+    background-size: 429px 285px;
+    width: 335px !important;
+    height: 295px !important;
+    margin: 0px -16px;
+  }
+  #drawflow .waterCooledChillerCutaway{
+    background-image: url("src/assets/images/cpmEquips/01_Water_Cooled_Chiller_Cutaway.png");
+  }
+  #drawflow .airCooledChiller{
+    background-image: url("src/assets/images/cpmEquips/02_Air_Cooled_Chiller.png");
+  }
+  #drawflow .airCooledChillerCutaway{
+    background-image: url("src/assets/images/cpmEquips/02_Air_Cooled_Chiller_Cutaway.png");
+  }
+  #drawflow .valve1{
+    background-image: url("src/assets/images/cpmEquips/2dImages/03_CPM_Valve.png");
+    width:70px !important;
+    height:70px;
+  }
+  #drawflow .valve2{
+    background-image: url("src/assets/images/cpmEquips/2dImages/03_CPM_Valve.png");
+    width: 170px !important;
+    height: 170px !important;
+    background-size: 270px 160px;
+    margin: -105px -135px;
+  }
+  #drawflow .coolingTowerFourFan{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Four_Fan.png");
+  }
+  #drawflow .coolingTowerFourFanCutaway{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Four_Fan_Cutaway.png");
+  }
+  #drawflow .coolingTowerSingleFan{
+    background-image: url("src/assets/images/cpmEquips/2dImages/04_CPM_Cooling_Tower_Single_fan.png");
+    width: 610px !important;
+    height: 380px !important;
+    background-size: 600px 400px;
+    margin: -269px -170px;
+  }
+  #drawflow .coolingTowerSingleFanCutaway{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Single_Fan_Cutaway.png");
+    width:260px !important;
+    height:250px;
+  }
+  #drawflow .coolingTowerTwoFan{
+    background-image: url("src/assets/images/cpmEquips/04_Cooling_Tower_Two_Fan.png");
+    width:260px !important;
+    height:250px;
+  }
+  #drawflow .flowSwitch{
+    background-image: url("src/assets/images/cpmEquips/05_Flow_Switch.png");
+    width:90px !important;
+    height:100px;
+  }
+  #drawflow .pump1Vertical{
+    background-image: url("src/assets/images/cpmEquips/2dImages/06_CPM_Pump.png");
+    width: 256px !important;
+    height: 268px !important;
+    background-size: 273px 173px;
+    margin: -114px -111px;
+  }
+  #drawflow .pump1Horizontal{
+    background-image: url("src/assets/images/cpmEquips/06_Pump2.png");
+    width:90px !important;
+    height:100px;
+  }
+  #drawflow .building2Pipe{
+    background-image: url("src/assets/images/cpmEquips/2dImages/15_CPM_Building.png");
+    width: 500px !important;
+    height: 355px !important;
+    background-size: 520px 410px;
+    margin: -308px -190px;
+  }
+  #drawflow .building4Pipe{
+    background-image: url("src/assets/images/cpmEquips/15_Building_2_Pipe-1.png");
+    width:230px !important;
     height:200px; 
-  } 
+  }
+*/
